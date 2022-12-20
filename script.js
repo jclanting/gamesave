@@ -1,22 +1,26 @@
-const api_url = "https://www.cheapshark.com/api/1.0/games?id=612"
-const redirect_url_noID = "https://www.cheapshark.com/redirect?dealID="
+const api_url_template = "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&"
+const redirect_url_template = "https://www.cheapshark.com/redirect?dealID="
 
 async function updateDeals() {
 
-    // Making an API call and getting the response back
-    const response = await fetch(api_url)
+    document.getElementById("details").replaceChildren()
 
-    // Parsing it to JSON format
-    const data = await response.json();
+    // Using the steamAppID to lookup the deals
+    var steamAppID = document.getElementById("id_input").value
+    var api_url = api_url_template + "steamAppID=" + steamAppID
+    // Making an API call and getting the response (the deals) back
+    var response = await fetch(api_url)
+    // Parsing the deals to JSON format
+    var data = await response.json()
     console.log(data)
 
     // Appending title of game to DOM
-    var title = document.createTextNode(data.info.title)
+    var title = document.createTextNode(data[0].title)
     document.getElementById("details").appendChild(title)
 
     // Dynamically creating table consisting of
     // the deal number, price, and link
-    let num_deals = Object.keys(data.deals).length
+    let num_deals = Object.keys(data).length
     let table = document.createElement("table")
     for (var i = 0; i < num_deals; i++) {
 
@@ -31,10 +35,10 @@ async function updateDeals() {
         // Creating the text that will be in the table data elements
         // by retrieving the data from the JSON
         var text_num = document.createTextNode((i+1).toString())
-        var text_price = document.createTextNode(data.deals[i].price)
+        var text_price = document.createTextNode(data[i].salePrice)
         // dealID is a paragraph so that it can use a hyperlink
         var p_dealID = document.createElement("p")
-        var redirect_url = redirect_url_noID + data.deals[i].dealID
+        var redirect_url = redirect_url_template + data[i].dealID
         p_dealID.innerHTML = "<a href=\"" + redirect_url + "\"> Link</a>"
 
         // Appending the text to its corresponding table data elements
@@ -56,5 +60,3 @@ async function updateDeals() {
     document.getElementById("details").appendChild(table)
 
 }
-
-updateDeals();
