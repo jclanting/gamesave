@@ -39,7 +39,7 @@ function appendDeals(data, storeData) {
     // the deal number, price, and link
     const numDeals = Object.keys(data).length
     const table = document.createElement("table")
-        for (var i = 0; i < numDeals; i++) {
+    for (var i = 0; i < numDeals; i++) {
 
         // Creating the table row
         const tr = document.createElement("tr");
