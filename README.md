@@ -4,6 +4,8 @@
 
 GameSave is a web application that finds a Steam game's current available deals when its Steam URL is inputted. For each deal listed, its host website's name/link, its price, and its percentage of money saved is listed. I used this project to become familar with using APIs and reading API documentation, something I hadn't done prior. Moreover, I intend to take this project further by eventually making a Discord Bot and Google Chrome extension version of it.
 
+All the data used is sourced from the <a href="https://apidocs.cheapshark.com/" target="_blank">CheapShark API</a>. Shoutout to them for being so accessible and helpful!
+
 <a href="https://jclanting.github.io/gamesave/" target="_blank">Link to website found here.</a>
 
 <h2>Built With</h2>
