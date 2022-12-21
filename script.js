@@ -1,10 +1,10 @@
-const api_url_template = "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&"
-const redirect_url_template = "https://www.cheapshark.com/redirect?dealID="
-const image_url_template = "https://steamcdn-a.akamaihd.net/steam/apps/"
-const stores_url = "https://www.cheapshark.com/api/1.0/stores"
+const apiURLTemplate = "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&"
+const redirectURLTemplate = "https://www.cheapshark.com/redirect?dealID="
+const imageURLTemplate = "https://steamcdn-a.akamaihd.net/steam/apps/"
+const storesURL = "https://www.cheapshark.com/api/1.0/stores"
 
 function clearBody() {
-    document.getElementById("title_price").replaceChildren()
+    document.getElementById("details").replaceChildren()
     document.getElementById("deals").replaceChildren()
 }
 
@@ -18,66 +18,66 @@ function searchKeyPress(e) {
 
 async function callAPI() {
     // Using the steamAppID to lookup the deals
-    var steamAppID = document.getElementById("id_input").value.split("/")[4]
-    var api_url = api_url_template + "steamAppID=" + steamAppID
+    const steamAppID = document.getElementById("id-input").value.split("/")[4]
+    const apiURL = apiURLTemplate + "steamAppID=" + steamAppID
     // Making an API call and getting the response (the deals) back
-    var response = await fetch(api_url)
+    const response = await fetch(apiURL)
     // Parsing the deals to JSON format
-    var data = await response.json()
+    const data = await response.json()
     console.log(data)
 
     // Another API call but this time for the store data
-    var store_response = await fetch(stores_url)
-    var store_data = await store_response.json()
+    const storeResponse = await fetch(storesURL)
+    const storeData = await storeResponse.json()
 
     // Convert both JSON objects to strings and return them as an array
-    return [JSON.stringify(data), JSON.stringify(store_data)]
+    return [JSON.stringify(data), JSON.stringify(storeData)]
 }
 
-function appendDeals(data, store_data) {
-        // Dynamically creating table consisting of
-        // the deal number, price, and link
-        let num_deals = Object.keys(data).length
-        let table = document.createElement("table")
-        for (var i = 0; i < num_deals; i++) {
+function appendDeals(data, storeData) {
+    // Dynamically creating table consisting of
+    // the deal number, price, and link
+    const numDeals = Object.keys(data).length
+    const table = document.createElement("table")
+        for (var i = 0; i < numDeals; i++) {
 
         // Creating the table row
-        var tr = document.createElement("tr");
+        const tr = document.createElement("tr");
 
         // Creating three table data elements
-        var td_store = document.createElement("td")
-        var td_price = document.createElement("td")
-        var td_savings = document.createElement("td")
+        const tdStore = document.createElement("td")
+        const tdPrice = document.createElement("td")
+        const tdSavings = document.createElement("td")
 
 
         // This section handles the first data element,
         // consisting of a hyperlink of the store's name to
         // that redirects to the deal itself
-        var p_store = document.createElement("p")
+        const pStore = document.createElement("p")
         // Retrieving the store name using the store data API call
-        var text_store = document.createTextNode(store_data[parseInt(data[i].storeID) - 1].storeName)
+        const textStore = document.createTextNode(storeData[parseInt(data[i].storeID) - 1].storeName)
         // Creating the redirect deal link using the dealID
-        var redirect_url = redirect_url_template + data[i].dealID
+        const redirectURL = redirectURLTemplate + data[i].dealID
         // Setting the innerHTML to a hyperlink (text is the store name, link is the deal link)
-        var innerHTML = "<a href=\"" + redirect_url + "\">" + text_store.textContent + "</a>"
-        p_store.innerHTML = innerHTML
+        const innerHTML = "<a href=\"" + redirectURL + "\">" + textStore.textContent + "</a>"
+        pStore.innerHTML = innerHTML
 
         // Handling the second data element, consisting of the deal's price
-        var text_price = document.createTextNode("$" + data[i].salePrice)
+        const textPrice = document.createTextNode("$" + data[i].salePrice)
 
         // Handling the third data element, consisting of a percentage
         // of how much money is saved
-        var text_savings = document.createTextNode(Math.round(parseInt(data[i].savings)).toString() + "%")
+        const textSavings = document.createTextNode(Math.round(parseInt(data[i].savings)).toString() + "%")
 
         // Appending the text to their corresponding table data elements
-        td_store.appendChild(p_store)
-        td_price.appendChild(text_price)
-        td_savings.appendChild(text_savings)
+        tdStore.appendChild(pStore)
+        tdPrice.appendChild(textPrice)
+        tdSavings.appendChild(textSavings)
 
         // Appending the table data elements to the table row
-        tr.appendChild(td_store)
-        tr.appendChild(td_price)
-        tr.appendChild(td_savings)
+        tr.appendChild(tdStore)
+        tr.appendChild(tdPrice)
+        tr.appendChild(tdSavings)
 
         // Appending the table row to the table
         table.appendChild(tr)
@@ -90,14 +90,14 @@ function appendDeals(data, store_data) {
 
 function appendDetails(data) {
     // Getting game image and title
-    var thumb = document.createElement("img")
-    thumb.src = image_url_template + data[0].steamAppID + "/header.jpg"
+    const thumb = document.createElement("img")
+    thumb.src = imageURLTemplate + data[0].steamAppID + "/header.jpg"
     thumb.width = "240"
-    var title = document.createTextNode(data[0].title + " ($" + data[0].normalPrice + ")")
+    const title = document.createTextNode(data[0].title + " ($" + data[0].normalPrice + ")")
 
     // Appending details to body
-    document.getElementById("title_price").appendChild(thumb)
-    document.getElementById("title_price").appendChild(title)
+    document.getElementById("details").appendChild(thumb)
+    document.getElementById("details").appendChild(title)
 }
 
 async function updateDeals() {
@@ -106,20 +106,20 @@ async function updateDeals() {
     clearBody()
 
     // Calling API to retrieve deal and store data
-    const api_calls = await callAPI()
+    const apiCalls = await callAPI()
     // Converting strings to JSON objects
-    const data = JSON.parse(api_calls[0])
-    const store_data = JSON.parse(api_calls[1])
+    const data = JSON.parse(apiCalls[0])
+    const storeData = JSON.parse(apiCalls[1])
 
     try {
         // Appending image and title of game
         appendDetails(data)
         // Creating and appending table of deals
-        appendDeals(data, store_data)
+        appendDeals(data, storeData)
     } catch (error) {
         // Appending invalid input text
-        var invalid = document.createTextNode("Invalid input!")
-        document.getElementById("title_price").appendChild(invalid)
+        const textInvalid = document.createTextNode("Invalid input!")
+        document.getElementById("details").appendChild(textInvalid)
     }
 
 }

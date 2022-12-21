@@ -3,7 +3,7 @@
     font-family: Tahoma;
 }
 
-body, #title_price {
+body, #details {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,7 +36,7 @@ table, td {
     border-collapse: collapse;
 }
 
-.heading_container, .search_container, .deals_container {
+.heading-container, .search-container, .deals-container {
     display: flex;
     flex-direction: column;
     align-items: center;
