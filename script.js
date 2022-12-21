@@ -3,6 +3,19 @@ const redirect_url_template = "https://www.cheapshark.com/redirect?dealID="
 const image_url_template = "https://steamcdn-a.akamaihd.net/steam/apps/"
 const stores_url = "https://www.cheapshark.com/api/1.0/stores"
 
+function clearBody() {
+    document.getElementById("title_price").replaceChildren()
+    document.getElementById("deals").replaceChildren()
+}
+
+function searchKeyPress(e) {
+    if (e.keyCode == 13) {
+        document.getElementById('button').click();
+        return false;
+    }
+    return
+}
+
 async function callAPI() {
     // Using the steamAppID to lookup the deals
     var steamAppID = document.getElementById("id_input").value.split("/")[4]
@@ -19,11 +32,6 @@ async function callAPI() {
 
     // Convert both JSON objects to strings and return them as an array
     return [JSON.stringify(data), JSON.stringify(store_data)]
-}
-
-function clearBody() {
-    document.getElementById("title_price").replaceChildren()
-    document.getElementById("deals").replaceChildren()
 }
 
 function appendDeals(data, store_data) {
@@ -103,10 +111,15 @@ async function updateDeals() {
     const data = JSON.parse(api_calls[0])
     const store_data = JSON.parse(api_calls[1])
 
-    // Appending image and title of game
-    appendDetails(data)
-
-    // Creating and appending table of deals
-    appendDeals(data, store_data)
+    try {
+        // Appending image and title of game
+        appendDetails(data)
+        // Creating and appending table of deals
+        appendDeals(data, store_data)
+    } catch (error) {
+        // Appending invalid input text
+        var invalid = document.createTextNode("Invalid input!")
+        document.getElementById("title_price").appendChild(invalid)
+    }
 
 }

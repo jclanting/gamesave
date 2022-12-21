@@ -11,12 +11,12 @@
 <body>
     
     <div class="heading_container">
-        <t class="title" style="color:black">GameSave</t>
+        <h2 class="title" style="color:black">GameSave</t>
     </div>
 
     <div class="search_container">
-        <input id="id_input" placeholder="Steam Game URL">
-        <button onclick="updateDeals()">Enter</button>
+        <input id="id_input" placeholder="Steam Game URL" onkeypress="return searchKeyPress(event);">
+        <button id="button" onclick="updateDeals()">Enter</button>
     </div>
 
 
