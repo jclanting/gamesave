@@ -1,14 +1,41 @@
 * {
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 10px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+
+button {
+    width: 150px;
 }
 
 table, td {
-border-collapse: collapse;
-margin-left: auto;
-margin-right: auto;
-padding: 10px;
-border: 1px solid black;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.search_container, .deals_container {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#title_price {
+    margin: 10px;
 }
