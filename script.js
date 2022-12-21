@@ -1,5 +1,6 @@
 const api_url_template = "https://www.cheapshark.com/api/1.0/deals?sortBy=Price&"
 const redirect_url_template = "https://www.cheapshark.com/redirect?dealID="
+const image_url_template = "https://steamcdn-a.akamaihd.net/steam/apps/"
 const stores_url = "https://www.cheapshark.com/api/1.0/stores"
 
 async function callAPI() {
@@ -25,7 +26,7 @@ function clearBody() {
     document.getElementById("deals").replaceChildren()
 }
 
-function createTable(data, store_data) {
+function appendDeals(data, store_data) {
         // Dynamically creating table consisting of
         // the deal number, price, and link
         let num_deals = Object.keys(data).length
@@ -79,6 +80,18 @@ function createTable(data, store_data) {
     document.getElementById("deals").appendChild(table)
 }
 
+function appendDetails(data) {
+    // Getting game image and title
+    var thumb = document.createElement("img")
+    thumb.src = image_url_template + data[0].steamAppID + "/header.jpg"
+    thumb.width = "240"
+    var title = document.createTextNode(data[0].title + " ($" + data[0].normalPrice + ")")
+
+    // Appending details to body
+    document.getElementById("title_price").appendChild(thumb)
+    document.getElementById("title_price").appendChild(title)
+}
+
 async function updateDeals() {
 
     // Clearing the body
@@ -90,11 +103,10 @@ async function updateDeals() {
     const data = JSON.parse(api_calls[0])
     const store_data = JSON.parse(api_calls[1])
 
-    // Appending title of game to DOM
-    var title = document.createTextNode(data[0].title + " ($" + data[0].normalPrice + ")")
-    document.getElementById("title_price").appendChild(title)
+    // Appending image and title of game
+    appendDetails(data)
 
-    // Creating table of deals
-    createTable(data, store_data)
+    // Creating and appending table of deals
+    appendDeals(data, store_data)
 
 }
