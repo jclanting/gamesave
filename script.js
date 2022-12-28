@@ -123,3 +123,10 @@ async function updateDeals() {
     }
 
 }
+
+document.getElementById("button").addEventListener("click", updateDeals)
+document.getElementById("id-input").addEventListener("keyup", function(event) {
+    if (event.key == "Enter") {
+        updateDeals()
+    }
+})
