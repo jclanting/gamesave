@@ -2,11 +2,25 @@
  
 <h2>About</h2>
 
-GameSave is a web application that finds a Steam game's current available deals when its Steam URL is inputted. For each deal listed, its host website's name/link, its price, and its percentage of money saved is listed. I used this project to become familar with using APIs and reading API documentation, something I hadn't done prior. Moreover, I intend to take this project further by eventually making a Discord Bot and Google Chrome extension version of it.
+GameSave is a Chrome extension that finds a Steam game's current available deals. For each deal listed, its URL, its price, and its savings percentage is listed. The purpose of this project was to become familar with using APIs and reading API documentation, something I hadn't done prior.
 
-All the data used is sourced from the <a href="https://apidocs.cheapshark.com/" target="_blank">CheapShark API</a>. Shoutout to them for being so accessible and helpful!
+All data is sourced from <a href="https://apidocs.cheapshark.com/" target="_blank">CheapShark API</a>. Big thanks to them for being so accessible and helpful!
 
-<a href="https://jclanting.github.io/gamesave/" target="_blank">Link to website found here.</a>
+<h2>Usage</h2>
+<ol>
+  <li>Open a Steam game's page (tab URL should be like https://store.steampowered.com/app/1593500/God_of_War/)</li>
+  <li>While on that tab, open the GameSave extension.</li>
+  <li>Save money using the deals provided.</li>
+</ol>
+
+<h2>Installation (Chromium)</h2>
+<ol>
+ <li>Download <code>gamesave.zip</code> from <a href="https://github.com/jclanting/gamesave/releases/tag/v1.0.0" target="_blank">Releases</a>.</li>
+ <li>Unzip the file.</li>
+ <li>Go to your browser's extensions page (<code>chrome://extensions</code>).</li>
+ <li>Enable Developer Mode</li>
+ <li>Drag the unzipped folder anywhere on the page to import it (do not delete the folder afterwards).</li>
+</ol>
 
 <h2>Built With</h2>
 
