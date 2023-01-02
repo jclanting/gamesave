@@ -8,17 +8,9 @@ function clearBody() {
     document.getElementById("deals").replaceChildren()
 }
 
-function searchKeyPress(e) {
-    if (e.keyCode == 13) {
-        document.getElementById('button').click();
-        return false;
-    }
-    return
-}
-
-async function callAPI() {
+async function callAPI(url) {
     // Using the steamAppID to lookup the deals
-    const steamAppID = document.getElementById("id-input").value.split("/")[4]
+    const steamAppID = url.split("/")[4]
     const apiURL = apiURLTemplate + "steamAppID=" + steamAppID
     // Making an API call and getting the response (the deals) back
     const response = await fetch(apiURL)
@@ -39,6 +31,23 @@ function appendDeals(data, storeData) {
     // the deal number, price, and link
     const numDeals = Object.keys(data).length
     const table = document.createElement("table")
+
+    // Creating table header labels
+    const tr = document.createElement("tr")
+    const tdStore = document.createElement("td")
+    const tdPrice = document.createElement("td")
+    const tdSavings = document.createElement("td")
+    const textStore = document.createTextNode("Store")
+    const textPrice = document.createTextNode("Price")
+    const textSavings = document.createTextNode("Savings")
+    tdStore.appendChild(textStore)
+    tdPrice.appendChild(textPrice)
+    tdSavings.appendChild(textSavings)
+    tr.appendChild(tdStore)
+    tr.appendChild(tdPrice)
+    tr.appendChild(tdSavings)
+    table.appendChild(tr)
+
     for (var i = 0; i < numDeals; i++) {
 
         // Creating the table row
@@ -59,7 +68,7 @@ function appendDeals(data, storeData) {
         // Creating the redirect deal link using the dealID
         const redirectURL = redirectURLTemplate + data[i].dealID
         // Setting the innerHTML to a hyperlink (text is the store name, link is the deal link)
-        const innerHTML = "<a href=\"" + redirectURL + "\">" + textStore.textContent + "</a>"
+        const innerHTML = "<a href=\"" + redirectURL + "\" target=\"_blank\">" + textStore.textContent + "</a>"
         pStore.innerHTML = innerHTML
 
         // Handling the second data element, consisting of the deal's price
@@ -93,20 +102,18 @@ function appendDetails(data) {
     const thumb = document.createElement("img")
     thumb.src = imageURLTemplate + data[0].steamAppID + "/header.jpg"
     thumb.width = "240"
-    const title = document.createTextNode(data[0].title + " ($" + data[0].normalPrice + ")")
-
+    document.getElementById("title").innerHTML = data[0].title + " ($" + data[0].normalPrice + ")"
     // Appending details to body
     document.getElementById("details").appendChild(thumb)
-    document.getElementById("details").appendChild(title)
 }
 
-async function updateDeals() {
+async function updateDeals(url) {
 
     // Clearing the body
     clearBody()
 
     // Calling API to retrieve deal and store data
-    const apiCalls = await callAPI()
+    const apiCalls = await callAPI(url)
     // Converting strings to JSON objects
     const data = JSON.parse(apiCalls[0])
     const storeData = JSON.parse(apiCalls[1])
@@ -118,15 +125,19 @@ async function updateDeals() {
         appendDeals(data, storeData)
     } catch (error) {
         // Appending invalid input text
-        const textInvalid = document.createTextNode("Invalid input!")
+        const textInvalid = document.createTextNode("Current tab is not a Steam page!")
         document.getElementById("details").appendChild(textInvalid)
     }
 
 }
 
-document.getElementById("button").addEventListener("click", updateDeals)
-document.getElementById("id-input").addEventListener("keyup", function(event) {
-    if (event.key == "Enter") {
-        updateDeals()
-    }
-})
+function getURL() {
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        // Getting URL of current page
+        const url = tabs[0].url
+        // Updating deals using the URL
+        updateDeals(url)
+    })
+}
+
+getURL()

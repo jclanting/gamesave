@@ -1,0 +1,15 @@
+{
+    "name": "GameSave",
+    "version": "1.0.0",
+    "description": "An extension to find Steam game deals.",
+    "manifest_version": 3,
+    "author": "Johan Lanting",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "GameSave"
+    },
+    "icons": { "128": "icon128.png" },
+    "permissions": [ 
+    "tabs"
+    ]
+}

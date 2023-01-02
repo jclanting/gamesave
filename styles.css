@@ -10,34 +10,35 @@ body, #details {
     padding-bottom: 10px;
 }
 
-input {
-    padding: 10px;
-    margin: 10px;
-    width: 400px;
-    border: 1px solid black;
-    border-radius: 10px;
-
+body {
+    background-image: radial-gradient(#2a475e, #1b2838);
 }
 
-button {
-    width: 150px;
-    margin-bottom: 10px;
+#details {
+    color: #ACB2B8
 }
 
 img {
-    padding: 10px;
+    border-radius: 15px;
 }
 
-table, td {
+td {
     padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid black;
-    border-collapse: collapse;
+    border: 2px solid #171a21;
+    color: #ACB2B8;
 }
 
-.heading-container, .search-container, .deals-container {
+.heading-container, .deals-container, .info-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.info-container {
+    margin-top: 10px;
+    color: white;
+}
+
+a, a:visited, a:hover, a:active {
+    color: inherit;
 }
