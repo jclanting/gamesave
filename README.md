@@ -8,7 +8,7 @@ All data is sourced from <a href="https://apidocs.cheapshark.com/" target="_blan
 
 <h2>Usage</h2>
 <ol>
-  <li>Open a Steam game's page (tab URL should be like https://store.steampowered.com/app/1593500/God_of_War/)</li>
+  <li>Open a Steam game's page (tab URL should be like https://store.steampowered.com/app/1593500/God_of_War/).</li>
   <li>While on that tab, open the GameSave extension.</li>
   <li>Save money using the deals provided.</li>
 </ol>
@@ -18,7 +18,7 @@ All data is sourced from <a href="https://apidocs.cheapshark.com/" target="_blan
  <li>Download <code>gamesave.zip</code> from <a href="https://github.com/jclanting/gamesave/releases/tag/v1.0.0" target="_blank">Releases</a>.</li>
  <li>Unzip the file.</li>
  <li>Go to your browser's extensions page (<code>chrome://extensions</code>).</li>
- <li>Enable Developer Mode</li>
+ <li>Enable Developer Mode.</li>
  <li>Drag the unzipped folder anywhere on the page to import it (do not delete the folder afterwards).</li>
 </ol>
 
